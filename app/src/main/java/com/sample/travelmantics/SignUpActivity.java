@@ -34,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText myEmailAddress;
     EditText myPassword;
 
-    Button btn1, btn2;
+    Button btn1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,43 +54,9 @@ public class SignUpActivity extends AppCompatActivity {
         myEmailAddress = findViewById(R.id.myEmailAddress);
         myPassword = findViewById(R.id.myPassword);
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
-        }
-    }
-
-    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
-        try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
-            // Signed in successfully, show authenticated UI.
-            String displayName = account.getDisplayName();
-            String displayFamilyName = account.getFamilyName();
-
-            Toast.makeText(SignUpActivity.this, displayName + " ----- " + displayFamilyName, Toast.LENGTH_LONG).show();
-
-        } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more in=formation.
-            Log.w("login", "signInResult:failed code=" + e.getStatusCode());
-        }
-    }
 
 
     @Override
@@ -139,6 +105,10 @@ public class SignUpActivity extends AppCompatActivity {
                 });
 
 
+    }
+
+    public void goToSignIn(View view){
+        startActivity(new Intent(this, SignInActivity.class));
     }
 
 }
